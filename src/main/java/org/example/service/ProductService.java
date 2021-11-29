@@ -7,14 +7,8 @@ import org.example.domain.Review;
 import static org.example.util.CommonUtil.stopWatch;
 import static org.example.util.LoggerUtil.log;
 
-public class ProductService {
-    private final ProductInfoService productInfoService;
-    private final ReviewService reviewService;
-
-    public ProductService(ProductInfoService productInfoService, ReviewService reviewService) {
-        this.productInfoService = productInfoService;
-        this.reviewService = reviewService;
-    }
+public record ProductService(ProductInfoService productInfoService,
+                             ReviewService reviewService) {
 
     public Product retrieveProductDetails(String productId) {
         stopWatch.start();
