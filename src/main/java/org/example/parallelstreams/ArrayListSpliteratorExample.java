@@ -1,12 +1,13 @@
 package org.example.parallelstreams;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.example.util.CommonUtil.*;
 
 public class ArrayListSpliteratorExample {
-    public List<Integer> multiplyEachValue(List<Integer> inputList, int multiplyValue, boolean isParallel) {
+    public List<Integer> multiplyEachValue(ArrayList<Integer> inputList, int multiplyValue, boolean isParallel) {
         startTimer();
         Stream<Integer> integerStream = inputList.stream();
 
