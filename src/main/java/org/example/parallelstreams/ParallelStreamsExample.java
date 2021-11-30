@@ -25,6 +25,13 @@ public class ParallelStreamsExample {
                 names.stream().map(this::addNameLengthTransform).toList();
     }
 
+    public List<String> stringsToLowercase(List<String> names) {
+        return names
+                .parallelStream()
+                .map(String::toLowerCase)
+                .toList();
+    }
+
     public static void main(String[] args) {
         List<String> namesList = DataSet.namesList();
         ParallelStreamsExample parallelStreamsExample = new ParallelStreamsExample();
