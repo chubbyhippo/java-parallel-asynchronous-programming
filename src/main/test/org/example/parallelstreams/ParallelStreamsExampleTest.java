@@ -41,4 +41,16 @@ class ParallelStreamsExampleTest {
         assertEquals(4, resultList.size());
         resultList.forEach(name -> assertTrue(name.contains("-")));
     }
+
+    @Test
+    void stringsToLowercase() {
+        List<String> inputList = DataSet.namesList();
+
+        startTimer();
+        List<String> resultList = parallelStreamsExample.stringsToLowercase(inputList);
+        timeTaken();
+
+        assertEquals(4, resultList.size());
+        resultList.forEach(name -> assertEquals(name, name.toLowerCase()));
+    }
 }
