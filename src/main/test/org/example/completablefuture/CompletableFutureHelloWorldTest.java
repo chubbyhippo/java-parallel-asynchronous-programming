@@ -22,4 +22,12 @@ class CompletableFutureHelloWorldTest {
 
 
     }
+
+    @Test
+    void helloWorldWithSize() {
+        CompletableFuture<String> stringCompletableFuture = completableFutureHelloWorld.helloWorldWithSize();
+        stringCompletableFuture
+                .thenAccept(s -> assertEquals("11 - HELLO WORLD", s))
+                .join();
+    }
 }
