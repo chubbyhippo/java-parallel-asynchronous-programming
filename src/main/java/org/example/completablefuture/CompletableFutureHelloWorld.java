@@ -5,8 +5,7 @@ import org.example.service.HelloWorldService;
 
 import java.util.concurrent.CompletableFuture;
 
-import static org.example.util.CommonUtil.startTimer;
-import static org.example.util.CommonUtil.timeTaken;
+import static org.example.util.CommonUtil.*;
 import static org.example.util.LoggerUtil.log;
 
 @RequiredArgsConstructor
@@ -43,6 +42,26 @@ public class CompletableFutureHelloWorld {
                 CompletableFuture.supplyAsync(helloWorldService::world);
 
         String result = hello.thenCombine(world, (s, s2) -> s + s2)
+                .thenApply(String::toUpperCase)
+                .join();
+        timeTaken();
+        return result;
+    }
+
+    public String helloWorld3AsyncCalls() {
+
+        startTimer();
+        CompletableFuture<String> hello =
+                CompletableFuture.supplyAsync(helloWorldService::hello);
+        CompletableFuture<String> world =
+                CompletableFuture.supplyAsync(helloWorldService::world);
+        CompletableFuture<String> hi = CompletableFuture.supplyAsync(() -> {
+            delay(1000);
+            return " Hi CompletableFuture!";
+        });
+
+        String result = hello.thenCombine(world, (s, s2) -> s + s2)
+                .thenCombine(hi, (s, s2) -> s + s2)
                 .thenApply(String::toUpperCase)
                 .join();
         timeTaken();
