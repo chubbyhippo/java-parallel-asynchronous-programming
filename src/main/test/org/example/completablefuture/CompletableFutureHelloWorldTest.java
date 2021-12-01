@@ -44,4 +44,19 @@ class CompletableFutureHelloWorldTest {
 
         assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE!", helloWorld);
     }
+
+    @Test
+    void helloWorld4AsyncCalls() {
+        String helloWorld = completableFutureHelloWorld.helloWorld4AsyncCalls();
+
+        assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE! BYE!", helloWorld);
+    }
+
+    @Test
+    void helloWorldThenCompose() {
+        CompletableFuture<String> stringCompletableFuture = completableFutureHelloWorld.helloWorldThenCompose();
+        stringCompletableFuture
+                .thenAccept(s -> assertEquals("hello world!", s))
+                .join();
+    }
 }
