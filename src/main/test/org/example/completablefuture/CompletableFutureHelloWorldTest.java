@@ -30,4 +30,11 @@ class CompletableFutureHelloWorldTest {
                 .thenAccept(s -> assertEquals("11 - HELLO WORLD", s))
                 .join();
     }
+
+    @Test
+    void helloWorldMultipleAsyncCalls() {
+        String helloWorld = completableFutureHelloWorld.helloWorldMultipleAsyncCalls();
+
+        assertEquals("HELLO WORLD!", helloWorld);
+    }
 }
