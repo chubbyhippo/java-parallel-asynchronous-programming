@@ -7,9 +7,11 @@ import org.example.domain.checkout.CheckoutResponse;
 import org.example.domain.checkout.CheckoutStatus;
 
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 import static org.example.util.CommonUtil.startTimer;
 import static org.example.util.CommonUtil.timeTaken;
+import static org.example.util.LoggerUtil.log;
 
 public class CheckoutService {
     private final PriceValidatorService priceValidatorService;
@@ -35,7 +37,23 @@ public class CheckoutService {
             return new CheckoutResponse(CheckoutStatus.FAILURE, priceValidationList);
         }
 
-        return new CheckoutResponse(CheckoutStatus.SUCCESS, priceValidationList);
+        double finalPrice = calculateFinalPrice(cart);
+        log("Checkout completed and the final price is " + finalPrice);
+        return new CheckoutResponse(CheckoutStatus.SUCCESS, finalPrice);
     }
 
+    private double calculateFinalPrice(Cart cart) {
+        return cart.getCartItemList()
+                .parallelStream()
+                .map(cartItem -> cartItem.getQuantity() * cartItem.getRate())
+                .mapToDouble(Double::doubleValue)
+                .sum();
+    }
+
+    private double calculateFinalPriceUsingReduce(Cart cart) {
+        return cart.getCartItemList()
+                .parallelStream()
+                .map(cartItem -> cartItem.getQuantity() * cartItem.getRate())
+                .reduce(0.0, Double::sum);
+    }
 }
