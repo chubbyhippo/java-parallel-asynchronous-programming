@@ -9,6 +9,5 @@ public class InventoryService {
         delay(500);
         return Inventory.builder()
                 .count(2).build();
-
     }
 }
