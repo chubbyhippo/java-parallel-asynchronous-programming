@@ -48,7 +48,6 @@ public class ProductServiceUsingCompletableFuture {
                     productInfo.setProductOptions(updateInventory(productInfo));
                     return productInfo;
                 });
-
         return getProduct(productId, productInfoCompletableFuture);
     }
 
@@ -61,7 +60,6 @@ public class ProductServiceUsingCompletableFuture {
                         review))
                 .join(); //block the thread
 
-        stopWatch.stop();
         log("Total Time Taken : " + stopWatch.getTime());
         return product;
     }
@@ -78,6 +76,22 @@ public class ProductServiceUsingCompletableFuture {
                 .toList();
     }
 
+
+    private List<ProductOption> updateInventoryNonBlocking(ProductInfo productInfo) {
+
+        return productInfo.getProductOptions()
+                .stream()
+                .map(productOption -> CompletableFuture.supplyAsync(() -> inventoryService.retrieveInventory())
+                        .thenApply(inventory -> {
+                            productOption.setInventory(inventory);
+                            return productOption;
+                        }))
+                .toList()
+                .stream()
+                .map(CompletableFuture::join)
+                .toList();
+    }
+
     public CompletableFuture<Product> retrieveCompletableFutureProduct(String productId) {
         CompletableFuture<ProductInfo> productInfoCompletableFuture = CompletableFuture
                 .supplyAsync(() -> productInfoService.retrieveProductInfo(productId));
@@ -88,7 +102,17 @@ public class ProductServiceUsingCompletableFuture {
                 .thenCombine(reviewCompletableFuture, (productInfo, review) -> new Product(productId, productInfo,
                         review));
     }
+    public Product retrieveProductDetailsWithInventoryWithNonBlocking(String productId) {
+        stopWatch.start();
 
+        CompletableFuture<ProductInfo> productInfoCompletableFuture = CompletableFuture
+                .supplyAsync(() -> productInfoService.retrieveProductInfo(productId))
+                .thenApply(productInfo -> {
+                    productInfo.setProductOptions(updateInventoryNonBlocking(productInfo));
+                    return productInfo;
+                });
+        return getProduct(productId, productInfoCompletableFuture);
+    }
     public static void main(String[] args) {
 
         ProductInfoService productInfoService = new ProductInfoService();
