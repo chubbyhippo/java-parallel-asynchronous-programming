@@ -23,24 +23,37 @@ public class ProductServiceUsingCompletableFuture {
         stopWatch.start();
 
         CompletableFuture<ProductInfo> productInfoCompletableFuture = CompletableFuture
-                .supplyAsync(()-> productInfoService.retrieveProductInfo(productId));
+                .supplyAsync(() -> productInfoService.retrieveProductInfo(productId));
         CompletableFuture<Review> reviewCompletableFuture = CompletableFuture
-                .supplyAsync(()-> reviewService.retrieveReviews(productId));
+                .supplyAsync(() -> reviewService.retrieveReviews(productId));
 
         Product product = productInfoCompletableFuture
-                .thenCombine(reviewCompletableFuture, (productInfo,review)->new Product(productId, productInfo, review))
+                .thenCombine(reviewCompletableFuture, (productInfo, review) -> new Product(productId, productInfo,
+                        review))
                 .join(); //block the thread
 
         stopWatch.stop();
-        log("Total Time Taken : "+ stopWatch.getTime());
+        log("Total Time Taken : " + stopWatch.getTime());
         return product;
+    }
+
+    public CompletableFuture<Product> retrieveCompletableFutureProduct(String productId) {
+        CompletableFuture<ProductInfo> productInfoCompletableFuture = CompletableFuture
+                .supplyAsync(() -> productInfoService.retrieveProductInfo(productId));
+        CompletableFuture<Review> reviewCompletableFuture = CompletableFuture
+                .supplyAsync(() -> reviewService.retrieveReviews(productId));
+
+        return productInfoCompletableFuture
+                .thenCombine(reviewCompletableFuture, (productInfo, review) -> new Product(productId, productInfo,
+                        review));
     }
 
     public static void main(String[] args) {
 
         ProductInfoService productInfoService = new ProductInfoService();
         ReviewService reviewService = new ReviewService();
-        ProductServiceUsingCompletableFuture productService = new ProductServiceUsingCompletableFuture(productInfoService, reviewService);
+        ProductServiceUsingCompletableFuture productService =
+                new ProductServiceUsingCompletableFuture(productInfoService, reviewService);
         String productId = "ABC123";
         Product product = productService.retrieveProductDetails(productId);
         log("Product is " + product);
