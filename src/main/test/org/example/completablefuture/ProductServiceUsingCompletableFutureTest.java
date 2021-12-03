@@ -57,4 +57,17 @@ class ProductServiceUsingCompletableFutureTest {
                         .forEach(productOption -> assertNotNull(productOption.getInventory()));
         assertNotNull(product.getReview());
     }
+
+    @Test
+    void retrieveProductDetailsWithInventoryWithNonBlocking() {
+        String productId = "ABC123";
+
+        Product product = productServiceUsingCompletableFuture.retrieveProductDetailsWithInventoryWithNonBlocking(productId);
+
+        assertNotNull(product);
+        assertTrue(product.getProductInfo().getProductOptions().size() > 0);
+        product.getProductInfo().getProductOptions()
+                .forEach(productOption -> assertNotNull(productOption.getInventory()));
+        assertNotNull(product.getReview());
+    }
 }
