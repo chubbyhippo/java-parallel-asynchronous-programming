@@ -5,7 +5,10 @@ import org.example.service.ProductInfoService;
 import org.example.service.ReviewService;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.concurrent.CompletableFuture;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ProductServiceUsingCompletableFutureTest {
     private final ProductInfoService productInfoService = new ProductInfoService();
@@ -22,5 +25,20 @@ class ProductServiceUsingCompletableFutureTest {
         assertNotNull(product);
         assertTrue(product.getProductInfo().getProductOptions().size() > 0);
         assertNotNull(product.getReview());
+    }
+
+    @Test
+    void retrieveCompletableFutureProduct() {
+
+        String productId = "ABC123";
+
+        CompletableFuture<Product> productCompletableFuture =
+                productServiceUsingCompletableFuture.retrieveCompletableFutureProduct(productId);
+
+        productCompletableFuture.thenAccept(product -> {
+            assertNotNull(product);
+            assertTrue(product.getProductInfo().getProductOptions().size() > 0);
+            assertNotNull(product.getReview());
+        }).join();
     }
 }
