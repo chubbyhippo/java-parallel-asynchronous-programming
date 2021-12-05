@@ -27,13 +27,23 @@ public class CompletableFutureHelloWorldExceptionExample {
 
         String result = hello
                 .handle((s, throwable) -> {
-                    log("Exception is :" + throwable.getMessage());
-                    return "";
+                    log("res is : " + s);
+                    if (throwable != null) {
+                        log("Exception is :" + throwable.getMessage());
+                        return "";
+                    } else {
+                        return s;
+                    }
                 })
                 .thenCombine(world, (s, s2) -> s + s2)
                 .handle((s, throwable) -> {
-                    log("Exception after world is :" + throwable.getMessage());
-                    return "";
+                    log("res is : " + s);
+                    if (throwable != null) {
+                        log("Exception after world is :" + throwable.getMessage());
+                        return "";
+                    } else {
+                        return s;
+                    }
                 })
                 .thenCombine(hi, (s, s2) -> s + s2)
                 .thenApply(String::toUpperCase)
