@@ -7,15 +7,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CompletableFutureHelloWorldExceptionExampleTest {
 
     @Mock
-    HelloWorldService helloWorldService = mock(HelloWorldService.class);
+    HelloWorldService helloWorldService;
 
     @InjectMocks
     CompletableFutureHelloWorldExceptionExample completableFutureHelloWorldException;
