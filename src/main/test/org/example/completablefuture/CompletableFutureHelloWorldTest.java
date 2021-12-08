@@ -73,4 +73,10 @@ class CompletableFutureHelloWorldTest {
 
         assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE! BYE!", helloWorld);
     }
+
+    @Test
+    void anyOf() {
+        String helloWorld = completableFutureHelloWorld.anyOf();
+        assertEquals("hello world", helloWorld);
+    }
 }
