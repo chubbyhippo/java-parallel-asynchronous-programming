@@ -20,10 +20,24 @@ public class MoviesClient {
         return new Movie(movieInfo, reviews);
     }
 
+    public List<Movie> retrieveMovies(List<Long> movieInfoIds) {
+        return movieInfoIds
+                .stream()
+                .map(this::retrieveMovie)
+                .toList();
+    }
+
     public CompletableFuture<Movie> retrieveMovieCompletableFuture(Long movieInfoId) {
         var movieInfo = CompletableFuture.supplyAsync(() -> invokeMovieInfoService(movieInfoId));
         var reviews = CompletableFuture.supplyAsync(() -> invokeMovieReviewsService(movieInfoId));
         return movieInfo.thenCombine(reviews, Movie::new);
+    }
+
+    public List<Movie> retrieveMoviesCompletableFuture(List<Long> movieInfoIds) {
+        return movieInfoIds.stream()
+                .map(this::retrieveMovieCompletableFuture)
+                .map(CompletableFuture::join)
+                .toList();
     }
 
     private MovieInfo invokeMovieInfoService(Long movieInfoId) {
