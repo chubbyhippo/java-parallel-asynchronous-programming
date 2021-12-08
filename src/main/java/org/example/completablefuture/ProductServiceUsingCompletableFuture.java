@@ -53,7 +53,14 @@ public class ProductServiceUsingCompletableFuture {
 
     private Product getProduct(String productId, CompletableFuture<ProductInfo> productInfoCompletableFuture) {
         CompletableFuture<Review> reviewCompletableFuture = CompletableFuture
-                .supplyAsync(() -> reviewService.retrieveReviews(productId));
+                .supplyAsync(() -> reviewService.retrieveReviews(productId))
+                .exceptionally(throwable -> {
+                    log("Handled the Exception in reviewService : " +throwable.getMessage());
+                    return Review.builder()
+                            .noOfReviews(0)
+                            .overallRating(0.0)
+                            .build();
+                });
 
         Product product = productInfoCompletableFuture
                 .thenCombine(reviewCompletableFuture, (productInfo, review) -> new Product(productId, productInfo,
