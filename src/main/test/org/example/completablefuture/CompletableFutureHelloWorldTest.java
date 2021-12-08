@@ -59,4 +59,11 @@ class CompletableFutureHelloWorldTest {
                 .thenAccept(s -> assertEquals("hello world!", s))
                 .join();
     }
+
+    @Test
+    void helloWorld4AsyncCallsCustomThreadPool() {
+        String helloWorld = completableFutureHelloWorld.helloWorld4AsyncCallsCustomThreadPool();
+
+        assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE! BYE!", helloWorld);
+    }
 }
