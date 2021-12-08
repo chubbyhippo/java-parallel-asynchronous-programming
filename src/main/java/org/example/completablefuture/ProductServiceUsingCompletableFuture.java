@@ -65,6 +65,8 @@ public class ProductServiceUsingCompletableFuture {
         Product product = productInfoCompletableFuture
                 .thenCombine(reviewCompletableFuture, (productInfo, review) -> new Product(productId, productInfo,
                         review))
+                .whenComplete((product1, throwable) -> log("Inside whenComplete : " + product1
+                        + " and the exception is " + throwable.getMessage()))
                 .join(); //block the thread
 
         log("Total Time Taken : " + stopWatch.getTime());
