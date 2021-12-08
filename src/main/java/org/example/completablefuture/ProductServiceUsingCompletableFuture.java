@@ -94,6 +94,14 @@ public class ProductServiceUsingCompletableFuture {
                         .thenApply(inventory -> {
                             productOption.setInventory(inventory);
                             return productOption;
+                        })
+                        .exceptionally(throwable -> {
+                            log("Inventory exception is : " + throwable.getMessage());
+                            Inventory recoverableValue = Inventory.builder()
+                                    .count(1)
+                                    .build();
+                            productOption.setInventory(recoverableValue);
+                            return productOption;
                         }))
                 .toList()
                 .stream()
