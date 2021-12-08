@@ -3,6 +3,7 @@ package org.example.completablefuture;
 import lombok.RequiredArgsConstructor;
 import org.example.service.HelloWorldService;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,6 +23,9 @@ public class CompletableFutureHelloWorld {
         System.out.println("result = " + result);
 
         log("Done");
+
+
+
     }
 
     public CompletableFuture<String> helloWorld() {
@@ -174,5 +178,33 @@ public class CompletableFutureHelloWorld {
         return CompletableFuture.supplyAsync(helloWorldService::hello)
                 .thenCompose(helloWorldService::worldFuture);
 
+    }
+
+    public String anyOf() {
+        CompletableFuture<String> responseFromDb = CompletableFuture.supplyAsync(() -> {
+            delay(1000);
+            log("response from db");
+            return "hello world";
+        });
+
+        CompletableFuture<String> responseFromRest = CompletableFuture.supplyAsync(() -> {
+            delay(3002);
+            log("response from rest");
+            return "hello world";
+        });
+
+        CompletableFuture<String> responseFromSoap = CompletableFuture.supplyAsync(() -> {
+            delay(5001);
+            log("response from soap");
+            return "hello world";
+        });
+
+        List<CompletableFuture<String>> responses = List.of(responseFromDb, responseFromRest, responseFromSoap);
+        return (String) CompletableFuture.anyOf(responses.toArray(new CompletableFuture[0])).thenApply(o -> {
+            if (o instanceof String) {
+                return o;
+            }
+            return null;
+        }).join();
     }
 }
