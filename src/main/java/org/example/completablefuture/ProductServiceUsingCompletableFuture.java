@@ -55,7 +55,7 @@ public class ProductServiceUsingCompletableFuture {
         CompletableFuture<Review> reviewCompletableFuture = CompletableFuture
                 .supplyAsync(() -> reviewService.retrieveReviews(productId))
                 .exceptionally(throwable -> {
-                    log("Handled the Exception in reviewService : " +throwable.getMessage());
+                    log("Handled the Exception in reviewService : " + throwable.getMessage());
                     return Review.builder()
                             .noOfReviews(0)
                             .overallRating(0.0)
@@ -65,8 +65,12 @@ public class ProductServiceUsingCompletableFuture {
         Product product = productInfoCompletableFuture
                 .thenCombine(reviewCompletableFuture, (productInfo, review) -> new Product(productId, productInfo,
                         review))
-                .whenComplete((product1, throwable) -> log("Inside whenComplete : " + product1
-                        + " and the exception is " + throwable.getMessage()))
+                .whenComplete((product1, throwable) -> {
+                    if (throwable != null) {
+                        log("Inside whenComplete : " + product1
+                                + " and the exception is " + throwable.getMessage());
+                    }
+                })
                 .join(); //block the thread
 
         log("Total Time Taken : " + stopWatch.getTime());
@@ -119,6 +123,7 @@ public class ProductServiceUsingCompletableFuture {
                 .thenCombine(reviewCompletableFuture, (productInfo, review) -> new Product(productId, productInfo,
                         review));
     }
+
     public Product retrieveProductDetailsWithInventoryWithNonBlocking(String productId) {
         stopWatch.start();
 
@@ -132,6 +137,7 @@ public class ProductServiceUsingCompletableFuture {
         stopWatch.reset();
         return getProduct(productId, productInfoCompletableFuture);
     }
+
     public static void main(String[] args) {
 
         ProductInfoService productInfoService = new ProductInfoService();
