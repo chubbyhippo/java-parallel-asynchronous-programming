@@ -32,7 +32,7 @@ public class ProductServiceUsingCompletableFutureExceptionTest {
         var productId = "ABC123";
         when(productInfoService.retrieveProductInfo(any())).thenCallRealMethod();
         when(reviewService.retrieveReviews(any()))
-                .thenThrow(new RuntimeException("Exception Occured"));
+                .thenThrow(new RuntimeException("Exception Occurred"));
         when(inventoryService.retrieveInventory()).thenCallRealMethod();
 
         Product product =
@@ -49,7 +49,7 @@ public class ProductServiceUsingCompletableFutureExceptionTest {
     @Test
     void retrieveProductDetailsWithInventoryExceptionProductInfoServiceError() {
         var productId = "ABC123";
-        when(productInfoService.retrieveProductInfo(any())).thenThrow(new RuntimeException("Exception Occured"));
+        when(productInfoService.retrieveProductInfo(any())).thenThrow(new RuntimeException("Exception Occurred"));
         when(reviewService.retrieveReviews(any())).thenCallRealMethod();
 
         assertThrows(RuntimeException.class,
