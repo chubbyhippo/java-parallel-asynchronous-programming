@@ -51,6 +51,7 @@ public class CompletableFutureHelloWorld {
                 .thenApply(String::toUpperCase)
                 .join();
         timeTaken();
+        stopWatchReset();
         return result;
     }
 
@@ -71,6 +72,7 @@ public class CompletableFutureHelloWorld {
                 .thenApply(String::toUpperCase)
                 .join();
         timeTaken();
+        stopWatchReset();
         return result;
     }
 
@@ -96,7 +98,7 @@ public class CompletableFutureHelloWorld {
                 .join();
 
         timeTaken();
-
+        stopWatchReset();
         return hw;
     }
 
@@ -133,7 +135,7 @@ public class CompletableFutureHelloWorld {
                 .join();
 
         timeTaken();
-
+        stopWatchReset();
         return hw;
     }
 
@@ -170,7 +172,7 @@ public class CompletableFutureHelloWorld {
                 .join();
 
         timeTaken();
-
+        stopWatchReset();
         return hw;
     }
 
