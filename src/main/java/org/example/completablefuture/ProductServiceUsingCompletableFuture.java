@@ -128,6 +128,8 @@ public class ProductServiceUsingCompletableFuture {
                     productInfo.setProductOptions(updateInventoryNonBlocking(productInfo));
                     return productInfo;
                 });
+        stopWatch.stop();
+        stopWatch.reset();
         return getProduct(productId, productInfoCompletableFuture);
     }
     public static void main(String[] args) {
