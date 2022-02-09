@@ -49,6 +49,7 @@ public class CompletableFutureHelloWorldExceptionExample {
                 .thenApply(String::toUpperCase)
                 .join();
         timeTaken();
+        stopWatchReset();
         return result;
     }
 
@@ -78,6 +79,7 @@ public class CompletableFutureHelloWorldExceptionExample {
                 .thenApply(String::toUpperCase)
                 .join();
         timeTaken();
+        stopWatchReset();
         return result;
     }
 
@@ -115,6 +117,7 @@ public class CompletableFutureHelloWorldExceptionExample {
                 .thenApply(String::toUpperCase)
                 .join();
         timeTaken();
+        stopWatchReset();
         return result;
     }
 }
