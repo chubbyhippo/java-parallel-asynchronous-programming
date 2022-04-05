@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MoviesClientTest {
-    WebClient webClient = WebClient.builder()
+    private final WebClient webClient = WebClient.builder()
             .baseUrl("http://localhost:8080/movies")
             .build();
 
-    MoviesClient moviesClient = new MoviesClient(webClient);
+    private final MoviesClient moviesClient = new MoviesClient(webClient);
 
     @RepeatedTest(10)
     void retrieveMovie() {
