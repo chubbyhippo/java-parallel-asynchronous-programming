@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CompletableFutureHelloWorldTest {
 
-    HelloWorldService helloWorldService = new HelloWorldService();
-    CompletableFutureHelloWorld completableFutureHelloWorld = new CompletableFutureHelloWorld(helloWorldService);
+    private final HelloWorldService helloWorldService = new HelloWorldService();
+    private final CompletableFutureHelloWorld completableFutureHelloWorld = new CompletableFutureHelloWorld(helloWorldService);
 
     @Test
     void helloWorld() {
