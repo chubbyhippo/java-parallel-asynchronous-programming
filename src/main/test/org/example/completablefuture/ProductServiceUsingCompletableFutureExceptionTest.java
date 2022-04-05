@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ProductServiceUsingCompletableFutureExceptionTest {
+class ProductServiceUsingCompletableFutureExceptionTest {
 
     @Mock
     private ProductInfoService productInfoService;
