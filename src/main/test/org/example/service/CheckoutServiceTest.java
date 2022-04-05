@@ -6,11 +6,13 @@ import org.example.domain.checkout.CheckoutStatus;
 import org.example.util.DataSet;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CheckoutServiceTest {
-    PriceValidatorService priceValidatorService = new PriceValidatorService();
-    CheckoutService checkoutService = new CheckoutService(priceValidatorService);
+    private final PriceValidatorService priceValidatorService = new PriceValidatorService();
+    private final CheckoutService checkoutService = new CheckoutService(priceValidatorService);
+
     @Test
     void checkout() {
         Cart cart = DataSet.createCart(6);
