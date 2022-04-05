@@ -14,10 +14,10 @@ import static org.mockito.Mockito.when;
 class CompletableFutureHelloWorldExceptionExampleTest {
 
     @Mock
-    HelloWorldService helloWorldService;
+    private HelloWorldService helloWorldService;
 
     @InjectMocks
-    CompletableFutureHelloWorldExceptionExample completableFutureHelloWorldException;
+    private CompletableFutureHelloWorldExceptionExample completableFutureHelloWorldException;
 
 
     @Test
