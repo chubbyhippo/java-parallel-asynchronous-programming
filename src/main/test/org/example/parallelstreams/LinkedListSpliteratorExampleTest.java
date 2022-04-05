@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LinkedListSpliteratorExampleTest {
 
-    LinkedListSpliteratorExample linkedListSpliteratorExample = new LinkedListSpliteratorExample();
+    private final LinkedListSpliteratorExample linkedListSpliteratorExample = new LinkedListSpliteratorExample();
 
     @RepeatedTest(5)
     void multiplyEachValue() {
