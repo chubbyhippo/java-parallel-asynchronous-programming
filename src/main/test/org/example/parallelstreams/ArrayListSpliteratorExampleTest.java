@@ -2,12 +2,11 @@ package org.example.parallelstreams;
 
 import org.example.util.DataSet;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ArrayListSpliteratorExampleTest {
 
