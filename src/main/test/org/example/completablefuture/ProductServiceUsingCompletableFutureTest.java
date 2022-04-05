@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ProductServiceUsingCompletableFutureTest {
     private final ProductInfoService productInfoService = new ProductInfoService();
     private final ReviewService reviewService = new ReviewService();
-    private InventoryService inventoryService = new InventoryService();
+    private final InventoryService inventoryService = new InventoryService();
     private final ProductServiceUsingCompletableFuture productServiceUsingCompletableFuture =
             new ProductServiceUsingCompletableFuture(productInfoService, reviewService, inventoryService);
 
