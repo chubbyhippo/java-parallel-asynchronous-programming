@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParallelStreamsExampleTest {
 
-    ParallelStreamsExample parallelStreamsExample = new ParallelStreamsExample();
+    private final ParallelStreamsExample parallelStreamsExample = new ParallelStreamsExample();
 
     @Test
     void stringTransform() {
